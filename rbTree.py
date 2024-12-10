@@ -200,11 +200,23 @@ class RedBlackTree:
                 node = node.right
         return node
 
-    def depth_traversal(self, node):
+    def preorder(self, node):
         if node != self.NIL_LEAF:
             print(node.key, end=" ")
-            self.depth_traversal(node.left)
-            self.depth_traversal(node.right)
+            self.preorder(node.left)
+            self.preorder(node.right)
+
+    def inorder(self, node):
+        if node != self.NIL_LEAF:
+            self.inorder(node.left)
+            print(node.key, end=" ")
+            self.inorder(node.right)
+
+    def postorder(self, node):
+        if node != self.NIL_LEAF:
+            self.postorder(node.left)
+            self.postorder(node.right)
+            print(node.key, end=" ")
 
     def width_traversal(self):
         if self.root is None:
@@ -235,8 +247,14 @@ keys = [50, 60, 70, 80, 90, 100]
 for key in keys:
     tree.insert(key)
 
-print("Обход в глубину:")
-tree.depth_traversal(tree.root)
+print("Прямой обход:")
+tree.preorder(tree.root)
+print()
+print("Симметричный обход:")
+tree.inorder(tree.root)
+print()
+print("Обратный обход:")
+tree.postorder(tree.root)
 print()
 print("Обход в ширину:")
 print(tree.width_traversal())
@@ -264,7 +282,10 @@ plt.title('Красно-черное дерево со случайными ра
 plt.xlabel('Количество узлов (n)')
 plt.ylabel('Высота дерева (h)')
 plt.grid()
-plt.plot(n, np.polyval(curve, n), color = 'red', label = 'Зависимость от случайных значений')
+#plt.plot(n, np.polyval(curve, n), color = 'red', label = 'Зависимость от случайных значений')
+plt.plot(n, heightResults, color = 'red', label = 'Зависимость от случайных значений')
+plt.plot(n, 2 * np.log2(n + 1), color = 'blue', label = 'Наибольшая высота')
+plt.plot(n, np.log2(n + 1), color = 'green', label = 'Наименьшая высота')
 plt.legend()
 plt.tight_layout()
 plt.show()
@@ -294,7 +315,10 @@ plt.title('Красно-черное дерево с возрастающими 
 plt.xlabel('Количество узлов (n)')
 plt.ylabel('Высота дерева (h)')
 plt.grid()
-plt.plot(n, np.polyval(curve, n), color = 'red', label = 'Зависимость от возрастающих значений')
+#plt.plot(n, np.polyval(curve, n), color = 'red', label = 'Зависимость от возрастающих значений')
+plt.plot(n, heightResults, color = 'red', label = 'Зависимость от случайных значений')
+plt.plot(n, 2 * np.log2(n + 1), color = 'blue', label = 'Наибольшая высота')
+plt.plot(n, np.log2(n + 1), color = 'green', label = 'Наименьшая высота')
 plt.legend()
 plt.tight_layout()
 plt.show()

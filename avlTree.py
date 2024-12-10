@@ -106,13 +106,29 @@ class AVLtree:
         return root
 
 
-    def depth_traversal(self, node):
+    def preorder(self, node):
         if not node:
             return 0
         else:
             print(node.key, end=" ")
-            self.depth_traversal(node.left)
-            self.depth_traversal(node.right)
+            self.preorder(node.left)
+            self.preorder(node.right)
+
+    def inorder(self, node):
+        if not node:
+            return 0
+        else:
+            self.inorder(node.left)
+            print(node.key, end=" ")
+            self.inorder(node.right)
+
+    def postorder(self, node):
+        if not node:
+            return 0
+        else:
+            self.postorder(node.left)
+            self.postorder(node.right)
+            print(node.key, end=" ")
 
     def width_traversal(self, root):
         if root is None:
@@ -140,8 +156,14 @@ keys = [50, 60, 70, 80, 90, 100]
 for key in keys:
     root = tree.insert(root, key)
 
-print("Обход в глубину:")
-tree.depth_traversal(root)
+print("Прямой обход:")
+tree.preorder(root)
+print()
+print("Симметричный обход:")
+tree.inorder(root)
+print()
+print("Обратный обход:")
+tree.postorder(root)
 print()
 print("Обход в ширину:")
 print(tree.width_traversal(root))
@@ -166,13 +188,16 @@ for i in range(lowBorder, highBorder, step):
     heightResults.append(tree.get_height(root))
     root = None
 n = np.array(n)
-curve = np.polyfit(n, heightResults, 2)
+#curve = np.polyfit(n, heightResults, 2)
 plt.scatter(n, heightResults, color = 'red')
 plt.title('AVL дерево со случайными равномерными значениями')
 plt.xlabel('Количество узлов (n)')
 plt.ylabel('Высота дерева (h)')
 plt.grid()
-plt.plot(n, np.polyval(curve, n), color = 'red', label = 'Зависимость от случайных значений')
+#plt.plot(n, np.polyval(curve, n), color = 'red', label = 'Зависимость от случайных значений')
+plt.plot(n, heightResults, color = 'red', label = 'Зависимость от случайных значений')
+plt.plot(n, 1.44 * np.log2(n + 1) - 0.32, color = 'blue', label = 'Наибольшая высота')
+plt.plot(n, np.log2(n + 1), color = 'green', label = 'Наименьшая высота')
 plt.legend()
 plt.tight_layout()
 plt.show()
@@ -202,7 +227,10 @@ plt.title('AVL дерево с возрастающими значениями')
 plt.xlabel('Количество узлов (n)')
 plt.ylabel('Высота дерева (h)')
 plt.grid()
-plt.plot(n, np.polyval(curve, n), color = 'red', label = 'Зависимость от возрастающих значений')
+#plt.plot(n, np.polyval(curve, n), color = 'red', label = 'Зависимость от возрастающих значений')
+plt.plot(n, heightResults, color = 'red', label = 'Зависимость от случайных значений')
+plt.plot(n, 1.44 * np.log2(n + 1) - 0.32, color = 'blue', label = 'Наибольшая высота')
+plt.plot(n, np.log2(n + 1), color = 'green', label = 'Наименьшая высота')
 plt.legend()
 plt.tight_layout()
 plt.show()

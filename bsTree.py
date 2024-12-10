@@ -69,13 +69,29 @@ class BinarySearchTree:
             node = node.left
         return node
 
-    def depth_traversal(self, node):
+    def preorder(self, node):
         if not node:
             return 0
         else:
             print(node.val, end=" ")
-            self.depth_traversal(node.left)
-            self.depth_traversal(node.right)
+            self.preorder(node.left)
+            self.preorder(node.right)
+
+    def inorder(self, node):
+        if not node:
+            return 0
+        else:
+            self.inorder(node.left)
+            print(node.val, end=" ")
+            self.inorder(node.right)
+
+    def postorder(self, node):
+        if not node:
+            return 0
+        else:
+            self.postorder(node.left)
+            self.postorder(node.right)
+            print(node.val, end=" ")
 
     def width_traversal(self, root):
         if root is None:
@@ -107,8 +123,14 @@ keys = [50, 60, 70, 80, 90, 100]
 for key in keys:
     tree.insert(key)
 
-print("Обход в глубину:")
-tree.depth_traversal(tree.root)
+print("Прямой обход:")
+tree.preorder(tree.root)
+print()
+print("Симметричный обход:")
+tree.inorder(tree.root)
+print()
+print("Обратный обход:")
+tree.postorder(tree.root)
 print()
 print("Обход в ширину:")
 print(tree.width_traversal(tree.root))
